@@ -1,1 +1,1 @@
-# kafka-manager
+# CMAK-docker
