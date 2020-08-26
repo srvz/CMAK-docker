@@ -1,4 +1,4 @@
-name: Build base image
+name: Build release image
 on:
   workflow_dispatch:
     inputs:
@@ -16,8 +16,10 @@ jobs:
       run: docker login -u srvz -p ${{ secrets.DOCKER_TOKEN }}
     - name: Build image
       env:
-        image: 'srvz/cmak:base'
+        image: 'srvz/cmak:${{ github.event.inputs.version }}'
         version: ${{ github.event.inputs.version }}
       run: |
-        docker build -f Base --build-arg "VERSION=${version}" -t ${image} .
+        docker build --build-arg "VERSION=${version}" -t ${image} .
         docker push ${image}
+        docker tag ${image} srvz/cmak:latest
+        docker push srvz/cmak:latest
