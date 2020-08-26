@@ -13,7 +13,7 @@ FROM openjdk:11-slim
 ENV LANG C.UTF-8
 
 RUN mkdir /app
-COPY --from=builder /tmp/cmak /app/cmak
+COPY --from=builder /tmp/cmak/* /app/
 ADD entrypoint.sh /app/
 RUN chmod +x /app/entrypoint.sh
 
