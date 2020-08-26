@@ -1,0 +1,23 @@
+name: Build base image
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of cmak'
+        required: true
+        default: '3.0.0.5'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Docker login
+      run: echo '${{ secrets.GITHUB_TOKEN }}' | docker login https://docker.pkg.github.com --username ${{ github.owner }} --password-stdin
+    - name: build base image
+      run: |
+        cd base
+        docker build -f Base \
+        --build-arg "VERSION=${{ github.event.inputs.version }}" \
+        -t docker.pkg.github.com/srvz/cmak/cmak:base .
+        docker push docker.pkg.github.com/srvz/cmak/cmak:base

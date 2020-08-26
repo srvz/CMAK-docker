@@ -1,0 +1,10 @@
+FROM openjdk:14-slim
+
+ARG VERSION=3.0.0.5
+
+RUN apt-get update && apt-get install --no-install-recommends -y curl unzip \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN cd tmp && curl -sL https://github.com/yahoo/CMAK/archive/$VERSION.tar.gz | tar zx \
+  && cd CMAK-${VERSION} \
+  && ./sbt clean dist && rm -rf /tmp/CMAK-${VERSION}
