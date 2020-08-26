@@ -15,9 +15,10 @@ jobs:
     - name: Docker login
       run: docker login https://docker.pkg.github.com -u srvz -p ${{ secrets.GITHUB_TOKEN }}
     - name: build base image
+      env:
+        image: 'docker.pkg.github.com/srvz/cmak/cmak:base'
+        version: ${{ github.event.inputs.version }}
       run: |
         cd base
-        docker build -f Base \
-        --build-arg "VERSION=${{ github.event.inputs.version }}" \
-        -t docker.pkg.github.com/srvz/cmak/cmak:base .
-        docker push docker.pkg.github.com/srvz/cmak/cmak:base
+        docker build -f Base --build-arg "VERSION=${version}" -t ${image} .
+        docker push ${image}
