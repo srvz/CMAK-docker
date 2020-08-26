@@ -28,9 +28,9 @@ docker-compose up -d
 # specify cmak startup options
 CMAK_ARGS="-Dconfig.file=/app/conf/application.conf -Dhttp.port=9000"
 ZK_HOSTS="zookeeper:2181"
-APPLICATION_SECRET=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c 64)
+APPLICATION_SECRET=$(LC_ALL=C tr -dc [:alnum:] < /dev/urandom | head -c 64)
 KAFKA_MANAGER_AUTH_ENABLED=true
 KAFKA_MANAGER_USERNAME=admin
-KAFKA_MANAGER_PASSWORD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c 32)
+KAFKA_MANAGER_PASSWORD=$(LC_ALL=C tr -dc [:alnum:] < /dev/urandom | head -c 32)
 ```
 
