@@ -8,6 +8,14 @@ Docker image for [CMAK](https://github.com/yahoo/CMAK) - Yahoo's Cluster Manager
 docker run -d --name cmak -p 9000:9000 -e ZK_HOSTS=zookeeper:2181 srvz/cmak:3.0.0.5
 ```
 
+or
+
+```
+docker run -d --name cmak -p 9000:9000 -v /path/to/application.conf:/app/conf/application.conf srvz/cmak:3.0.0.5
+```
+
+to override default configuration ([application.conf](https://github.com/yahoo/CMAK/blob/master/conf/application.conf))
+
 ## Run single node kafka for local development
 
 ```
