@@ -19,6 +19,5 @@ jobs:
         image: 'docker.pkg.github.com/srvz/cmak/cmak:base'
         version: ${{ github.event.inputs.version }}
       run: |
-        cd base
         docker build -f Base --build-arg "VERSION=${version}" -t ${image} .
         docker push ${image}
