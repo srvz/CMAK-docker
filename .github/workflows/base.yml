@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Docker login
-      run: echo '${{ secrets.GITHUB_TOKEN }}' | docker login https://docker.pkg.github.com --username ${{ github.owner }} --password-stdin
+      run: docker login https://docker.pkg.github.com -u srvz -p ${{ secrets.GITHUB_TOKEN }}
     - name: build base image
       run: |
         cd base
