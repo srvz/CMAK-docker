@@ -3,8 +3,11 @@ FROM node:12-buster-slim
 ARG VERSION=3.0.0.5
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && apt-get install -y openjdk-11-jdk-headless curl unzip \
-  && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN mkdir /usr/share/man/man1/ \
+  && apt-get update \
+  && apt-get install --no-install-recommends -y openjdk-11-jdk-headless curl unzip \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN cd tmp && curl -sL https://github.com/yahoo/CMAK/archive/$VERSION.tar.gz | tar zx \
   && cd CMAK-${VERSION} \
