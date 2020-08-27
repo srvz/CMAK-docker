@@ -5,7 +5,7 @@
     <img src="https://img.shields.io/docker/v/srvz/cmak" />
   </a>
   <a href="https://hub.docker.com/r/srvz/cmak">
-    <img alt="Docker Image Size (latest by date)" src="https://img.shields.io/docker/image-size/srvz/cmak">
+    <img alt="Docker Image Size (latest by date)" src="https://img.shields.io/docker/image-size/srvz/cmak?sort=date">
   </a>
 </p>
 
