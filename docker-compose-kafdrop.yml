@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  zookeeper:
+    image: "bitnami/zookeeper:3-debian-10"
+    ports:
+      - "2181:2181"
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+    networks:
+      - kafdrop
+  kafka:
+    image: "bitnami/kafka:2-debian-10"
+    ports:
+      - "9092:9092"
+    expose:
+      - "9093"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_LISTENERS: "INSIDE://kafka:9093,OUTSIDE://localhost:9092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT"
+      KAFKA_LISTENERS: "INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092"
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "INSIDE"
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+    depends_on:
+      - zookeeper
+    networks:
+      - kafdrop
+  kafdrop:
+    image: "obsidiandynamics/kafdrop"
+    init: true
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: "kafka:9093"
+      JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+    depends_on:
+      - kafka
+    networks:
+      - kafdrop
+
+networks:
+  kafdrop:
+    name: kafdrop
